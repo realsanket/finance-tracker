@@ -2,7 +2,7 @@ from supabase import create_client, Client
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import config as config_module
+import app_config as config_module
 SUPABASE_URL = config_module.SUPABASE_URL
 SUPABASE_KEY = config_module.SUPABASE_KEY
 from utils.utils import generate_uuid, load_json_file, save_json_file

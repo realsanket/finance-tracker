@@ -10,7 +10,7 @@ import uuid
 from data_manager import load_data, save_data, ensure_guids, load_prediction_rules, save_prediction_rules
 from prediction import generate_future_events
 from utils.utils import generate_uuid, load_json_file
-from config import SUPABASE_URL, SUPABASE_KEY
+from app_config import SUPABASE_URL, SUPABASE_KEY
 
 # File to persist data
 DATA_FILE = 'financial_data.json'
