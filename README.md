@@ -38,4 +38,3 @@ A Streamlit web app to track financial events, add entries, export data, and pre
 ---
 
 *Developed with Python, Streamlit, and Pandas.*
-
