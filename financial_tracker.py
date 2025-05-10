@@ -52,13 +52,16 @@ def main():
     if ensure_guids(data):
         save_data(data)
     df = pd.DataFrame(data)
+    # Remove 'id' column from DataFrame if present
+    if 'id' in df.columns:
+        df = df.drop(columns=['id'])
     
     # Load prediction rules
     prediction_rules = load_prediction_rules()
 
     # Ensure Date is always the second column for display and sort by Date descending
     if 'Date' in df.columns:
-        cols = [col for col in df.columns if col not in ['GUID', 'Date']]
+        cols = [col for col in df.columns if col not in ['GUID', 'Date', 'id']]
         df = df.sort_values('Date', ascending=False)
         display_cols = ['Date'] + cols
         display_df = df[display_cols].copy()
@@ -567,7 +570,6 @@ def main():
                     submitted = st.form_submit_button('💾 Update Entry')
                     if submitted:
                         updated_entry = {
-                            'GUID': row['GUID'],  # Preserve GUID
                             'Date': date_val.strftime('%Y-%m-%d'),
                             'HDFC (₹)': float(hdfc),
                             'ICICI (₹)': float(icici),
