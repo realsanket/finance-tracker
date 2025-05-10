@@ -38,3 +38,7 @@ A Streamlit web app to track financial events, add entries, export data, and pre
 ---
 
 *Developed with Python, Streamlit, and Pandas.*
+
+---
+
+**Note:** Move all business logic to `src/` directory for better organization.

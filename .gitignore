@@ -136,3 +136,5 @@ frontend/cypress/snapshots/linux/1x
 **/.benchmarks/
 financial_data.json
 prediction_rules.json
+config.py
+ss.txt

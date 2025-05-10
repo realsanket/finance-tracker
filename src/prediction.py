@@ -1,6 +1,13 @@
 # Handles prediction logic and future event generation
 import pandas as pd
 from datetime import datetime, date
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import config as config_module
+SUPABASE_URL = config_module.SUPABASE_URL
+SUPABASE_KEY = config_module.SUPABASE_KEY
+from utils.utils import generate_uuid, load_json_file
 from data_manager import load_prediction_rules
 
 def generate_future_events(df, months_ahead=3, rules=None):

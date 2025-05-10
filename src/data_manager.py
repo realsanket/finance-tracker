@@ -1,10 +1,12 @@
 from supabase import create_client, Client
+import sys
 import os
-import uuid
-import json
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import config as config_module
+SUPABASE_URL = config_module.SUPABASE_URL
+SUPABASE_KEY = config_module.SUPABASE_KEY
+from utils.utils import generate_uuid, load_json_file, save_json_file
 
-SUPABASE_URL = "https://apgbrhrovikixrjzwpvl.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFwZ2JyaHJvdmlraXhyanp3cHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY4NzUzMTIsImV4cCI6MjA2MjQ1MTMxMn0.X3EcU2SODXQ2IM71rjTSmgwtuewWgdjnmugCexELhNU"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # --- Financial Data ---
@@ -12,7 +14,7 @@ def ensure_guids(data):
     changed = False
     for row in data:
         if not row.get("id"):
-            row["id"] = str(uuid.uuid4())
+            row["id"] = generate_uuid()
             changed = True
     return changed
 
@@ -30,7 +32,7 @@ def save_data(data):
     for row in data:
         # Ensure id is present
         if not row.get("id"):
-            row["id"] = str(uuid.uuid4())
+            row["id"] = generate_uuid()
         # Map 'Date' to 'date' for Supabase
         row_to_insert = row.copy()
         if 'Date' in row_to_insert:
@@ -49,21 +51,16 @@ def save_prediction_rules(rules):
     supabase.table("prediction_rules").delete().not_.is_('id', None).execute()
     for rule in rules:
         if not rule.get("id"):
-            rule["id"] = str(uuid.uuid4())
+            rule["id"] = generate_uuid()
         supabase.table("prediction_rules").insert(rule).execute()
 
 # --- Columns/Schema ---
 COLUMNS_FILE = 'columns.json'
 def load_columns():
-    if os.path.exists(COLUMNS_FILE):
-        with open(COLUMNS_FILE, 'r') as f:
-            return json.load(f)
-    else:
-        return []
+    return load_json_file(COLUMNS_FILE)
 
 def save_columns(columns):
-    with open(COLUMNS_FILE, 'w') as f:
-        json.dump(columns, f, indent=2)
+    save_json_file(COLUMNS_FILE, columns)
 
 def add_column(column_name, operation="add", default_value=0):
     columns = load_columns()
