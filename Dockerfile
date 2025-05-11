@@ -28,11 +28,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY . .
 
 # Expose Streamlit default port
-EXPOSE 8501
+EXPOSE 80
 
 # Set environment variables for Streamlit (optional, can be overridden)
-ENV STREAMLIT_SERVER_PORT=8501 \
+ENV STREAMLIT_SERVER_PORT=80 \
     STREAMLIT_SERVER_HEADLESS=true
 
 # Command to run the Streamlit app
-CMD ["streamlit", "run", "src/financial_tracker.py"]
+CMD ["streamlit", "run", "src/financial_tracker.py", "--server.port=80"]
