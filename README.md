@@ -25,7 +25,7 @@ A Streamlit web app to track financial events, add entries, export data, and pre
    ```
 4. **Run the Streamlit app:**
    ```zsh
-   streamlit run financial_tracker.py
+streamlit run src/financial_tracker.py 
    ```
 
 ## Usage
